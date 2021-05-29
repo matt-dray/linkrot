@@ -1,0 +1,66 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# {linkrot}
+
+<!-- badges: start -->
+[![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+<!-- badges: end -->
+
+An R package to help detect [linkrot](https://en.wikipedia.org/wiki/Link_rot), which is when links to a web page break because it's been taken down or moved.
+
+Very much a concept for now. Feel free to contribute.
+
+## Install
+
+This package is only available on GitHub. Install from an R session with:
+
+```{r eval=FALSE}
+install.packages("remotes")
+remotes::install_github("matt-dray/linkrot")
+```
+
+## Example
+
+Pass a webpage URL to `lr_check()` and get a tibble with each https link on that page and what its [response code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) is (ideally we want `200`). 
+
+Here's a check on one of my older blog posts:
+
+```{r}
+library(linkrot)
+page <-  "https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/"
+lr_check(page)
+```
+
+Uh oh, at least one is broken: it has a `response_code` of `404`.
+
+You could iterate over multiple pages with {purrr}:
+
+```{r}
+pages <- c(
+  "https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/",
+  "https://www.rostrum.blog/2018/04/27/two-dogs-in-toilet-elderly-lady-involved/",
+  "https://www.rostrum.blog/2018/05/19/pokeballs-in-super-smash-bros/"
+)
+
+library(purrr)
+set_names(map(pages, lr_check), basename(pages))
+```
+
+Uh-oh, more broken links.
+
+## Code of Conduct
+
+Please note that the {linkrot} project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
