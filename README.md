@@ -9,6 +9,9 @@
 yet, or the repository is only intended to be a limited example, demo,
 or
 proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+[![R-CMD-check](https://github.com/matt-dray/linkrot/workflows/R-CMD-check/badge.svg)](https://github.com/matt-dray/linkrot/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/matt-dray/linkrot/branch/main/graph/badge.svg)](https://codecov.io/gh/matt-dray/linkrot?branch=main)
 <!-- badges: end -->
 
 An R package to help detect

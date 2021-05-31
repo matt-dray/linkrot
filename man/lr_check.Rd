@@ -18,5 +18,5 @@ Fetch the (https) URLs from a webpage and determine if they're still active
 by checking for a response (i.e. a response code of 200).
 }
 \examples{
-lr_check_page("https://www.rostrum.blog/2021/05/22/mission-across-iow/")
+\dontrun{lr_check("https://www.rostrum.blog/")}
 }

@@ -10,8 +10,12 @@
 #' @return A data.frame.
 #' @export
 #'
-#' @examples lr_check_page("https://www.rostrum.blog/2021/05/22/mission-across-iow/")
+#' @examples \dontrun{lr_check("https://www.rostrum.blog/")}
 lr_check <- function(page) {
+
+  if (class(page) != "character") {
+    stop("Argument 'page' must be a string.")
+  }
 
   page_get <- httr::GET(page)
 
