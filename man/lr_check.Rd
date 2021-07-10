@@ -7,16 +7,17 @@
 lr_check(page)
 }
 \arguments{
-\item{page}{Character. A valid https URL to a webpage that contains links you
-want to check for linkrot.}
+\item{page}{Character. A valid URL to a webpage that contains links you
+want to check for linkrot. Must start 'http://www.' or 'https://www.'.}
 }
 \value{
-A data.frame.
+A data.frame with 5 columns (page, link_url, link_text, response_code
+and response_category, is_rot) and as many rows per URLs found on the page
+provided by the user.
 }
 \description{
-Fetch the (https) URLs from a webpage and determine if they're still active
-by checking for a response (i.e. a response code of 200).
+Fetch web links from a given page and check for a response.
 }
 \examples{
-\dontrun{lr_check("https://www.rostrum.blog/")}
+\dontrun{ lr_check("https://www.rostrum.blog/") }
 }

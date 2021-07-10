@@ -6,7 +6,7 @@
 \alias{linkrot-package}
 \title{linkrot: Check Webpages For Linkrot}
 \description{
-Find and assess URLS from a webpage to see if they're still active.
+Find and assess URLs from a webpage to see if they're still active.
    External references are broken when websites and pages disappear or move; a
    process known as 'link rot'.
 }

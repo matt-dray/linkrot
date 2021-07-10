@@ -1,12 +1,12 @@
 Package: linkrot
 Title: Check Webpages For Linkrot
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "Matt",
            family = "Dray",
            role = c("aut", "cre"),
            email = "mwdray@gmail.com")
-Description: Find and assess URLS from a webpage to see if they're still active.
+Description: Find and assess URLs from a webpage to see if they're still active.
    External references are broken when websites and pages disappear or move; a
    process known as 'link rot'.
 License: MIT + file LICENSE
