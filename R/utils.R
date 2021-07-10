@@ -41,7 +41,7 @@
   links_df <- unique(links_df)
 
   # Only want links to webpages
-  pattern <- "^http://www\\.|^https://www\\."
+  pattern <- "^http://|^https://"
   links_df[grepl(pattern, links_df$link_url), ]
 
 }
@@ -83,13 +83,16 @@
   # Logical rot status
   links_df$success <- unlist(
     lapply(
-      links_df$response_code,
-      function(x) ifelse(x != "Success", TRUE, FALSE)
+      links_df$response_category,
+      function(x) ifelse(x == "Success", TRUE, FALSE)
     )
   )
 
   cat("\n")
 
-  return(links_df)
+  # Return as tibble for nicer printing
+  as_tibble(links_df)
+
+
 
 }

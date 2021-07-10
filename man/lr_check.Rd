@@ -12,8 +12,8 @@ want to check for linkrot. Must start 'http://www.' or 'https://www.'.}
 }
 \value{
 A data.frame with 5 columns (page, link_url, link_text, response_code
-and response_category, is_rot) and as many rows per URLs found on the page
-provided by the user.
+and response_category, success) and as many rows per URLs found on the
+page provided by the user.
 }
 \description{
 Fetch web links from a given page and check for a response.
