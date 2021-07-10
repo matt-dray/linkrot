@@ -12,6 +12,8 @@ proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https:
 [![R-CMD-check](https://github.com/matt-dray/linkrot/workflows/R-CMD-check/badge.svg)](https://github.com/matt-dray/linkrot/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/matt-dray/linkrot/branch/main/graph/badge.svg)](https://codecov.io/gh/matt-dray/linkrot?branch=main)
+[![rostrum.blog
+post](https://img.shields.io/badge/rostrum.blog-post-008900?style=flat&labelColor=black&logo=data:image/gif;base64,R0lGODlhEAAQAPEAAAAAABWCBAAAAAAAACH5BAlkAAIAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAEAAQAAAC55QkISIiEoQQQgghRBBCiCAIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAAh+QQJZAACACwAAAAAEAAQAAAC55QkIiESIoQQQgghhAhCBCEIgiAIgiAIQiAIgSAIgiAIQiAIgRAEQiAQBAQCgUAQEAQEgYAgIAgIBAKBQBAQCAKBQEAgCAgEAoFAIAgEBAKBIBAQCAQCgUAgEAgCgUBAICAgICAgIBAgEBAgEBAgEBAgECAgICAgECAQIBAQIBAgECAgICAgICAgECAQECAQICAgICAgICAgEBAgEBAgEBAgICAgICAgECAQIBAQIBAgECAgICAgIBAgECAQECAQIBAgICAgIBAgIBAgEBAgECAgECAgICAgICAgECAgECAgQIAAAQIKAAA7)](https://www.rostrum.blog/2021/07/10/linkrot/)
 <!-- badges: end -->
 
 An R package to help detect
@@ -38,7 +40,8 @@ on that page and what its [response
 code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) is
 (ideally we want `200`).
 
-Here’s a check on one of my older blog posts:
+Here’s a check on one of my older blog posts. The printout tells you the
+URL you’re looking at, with a dot for each successful check.
 
 ``` r
 library(linkrot)
