@@ -1,31 +1,29 @@
-page <- "https://www.rostrum.blog/"
-page_404 <- "https://www.rostrum.blog/404"
-
-test_that("output of check is a dataframe", {
-
-  valid_out <- lr_check(page)
-
-  # Expect a tibble back if URL is valid
-  expect_type(valid_out, "list")
-  expect_equal(class(valid_out), c("tbl_df", "tbl", "data.frame"))
-
-})
-
 test_that("invalid inputs cause errors", {
-
-  # Invalid page argument
   expect_error(lr_check())
   expect_error(lr_check(1))
   expect_error(lr_check(c(page, page)))
   expect_error(lr_check(list(page)))
-
-  # Correct class, but can't resolve
   expect_error(lr_check("x"))
-
 })
 
-test_that("unresolvable page causes error", {
-
-  expect_error(lr_check(page_404))
-
+with_mock_dir("lr_check_success", {
+  test_that("lr_check() output as expected", {
+    expect_type(lr_check("https://www.rostrum.blog/"), "list")
+    expect_equal(
+      class(lr_check("https://www.rostrum.blog/")),
+      c("tbl_df", "tbl", "data.frame")
+    )
+    expect_equal(
+      names(lr_check("https://www.rostrum.blog/")),
+      c("page", "link_url", "link_text", "response_code", "response_category")
+    )
+  })
 })
+
+with_mock_dir("lr_check_fail", {
+  test_that("lr_check() fails with unreachable page", {
+    expect_error(lr_check("http://httpbin.org/status/404"))
+  })
+})
+
+
