@@ -16,9 +16,10 @@ coverage](https://codecov.io/gh/matt-dray/linkrot/branch/main/graph/badge.svg)](
 
 An R package to help detect
 [linkrot](https://en.wikipedia.org/wiki/Link_rot), which is when links
-to a web page break because it’s been taken down or moved.
+to a web page break because they’ve been taken down or moved.
 
-Very much a concept for now. Feel free to contribute.
+Very much a concept. I wrote it to detect linkrot on my personal blog
+and it works for my needs. Feel free to contribute.
 
 ## Install
 
@@ -42,24 +43,22 @@ Here’s a check on one of my older blog posts:
 ``` r
 library(linkrot)
 page <-  "https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/"
-lr_check(page)
-#> # A tibble: 14 x 5
-#>    page           link_url           link_text    response_code response_catego…
-#>    <chr>          <chr>              <chr>                <int> <chr>           
-#>  1 https://www.r… https://www.r-pro… R statistic…           200 Success         
-#>  2 https://www.r… https://en.wikipe… Star Trek: …           200 Success         
-#>  3 https://www.r… https://github.co… regex                  200 Success         
-#>  4 https://www.r… https://en.wikipe… Wikipedia              200 Success         
-#>  5 https://www.r… https://cran.r-pr… how-to vign…           404 Client error    
-#>  6 https://www.r… https://www.htmlw… htmlwidget             200 Success         
-#>  7 https://www.r… https://github.co… ggsci                  200 Success         
-#>  8 https://www.r… https://rostrum.b… Adriana                200 Success         
-#>  9 https://www.r… https://xkcd.com/… relevant xk…           200 Success         
-#> 10 https://www.r… https://github.co… RTrek                  200 Success         
-#> 11 https://www.r… https://en.wikipe… Wikipedia              200 Success         
-#> 12 https://www.r… https://creativec… CC BY-NC-SA…           200 Success         
-#> 13 https://www.r… https://www.rostr… Feed                   200 Success         
-#> 14 https://www.r… https://github.co… Source                 200 Success
+detect_rot(page)
+#> Checking <https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/> ..............................
+#> # A tibble: 30 x 6
+#>    page    link_url    link_text response_code response_catego… response_success
+#>    <chr>   <chr>       <chr>             <dbl> <chr>            <lgl>           
+#>  1 https:… https://ww… R statis…           200 Success          TRUE            
+#>  2 https:… https://en… Star Tre…           200 Success          TRUE            
+#>  3 https:… http://www… Star Tre…           200 Success          TRUE            
+#>  4 https:… https://gi… regex               200 Success          TRUE            
+#>  5 https:… http://vit… tidy                200 Success          TRUE            
+#>  6 https:… https://en… Wikipedia           200 Success          TRUE            
+#>  7 https:… http://sel… Selector…           200 Success          TRUE            
+#>  8 https:… https://cr… how-to v…           404 Client error     FALSE           
+#>  9 https:… https://ww… htmlwidg…           200 Success          TRUE            
+#> 10 https:… https://gi… ggsci               200 Success          TRUE            
+#> # … with 20 more rows
 ```
 
 Uh oh, at least one is broken: it has a `response_code` of `404`.
@@ -74,66 +73,57 @@ pages <- c(
 )
 
 library(purrr)
-set_names(map(pages, lr_check), basename(pages))
+set_names(map(pages, detect_rot), basename(pages))
+#> Checking <https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/> ..............................
+#> Checking <https://www.rostrum.blog/2018/04/27/two-dogs-in-toilet-elderly-lady-involved/> ........................................
+#> Checking <https://www.rostrum.blog/2018/05/19/pokeballs-in-super-smash-bros/> .....................
 #> $`r-trek-exploring-stardates`
-#> # A tibble: 14 x 5
-#>    page           link_url           link_text    response_code response_catego…
-#>    <chr>          <chr>              <chr>                <int> <chr>           
-#>  1 https://www.r… https://www.r-pro… R statistic…           200 Success         
-#>  2 https://www.r… https://en.wikipe… Star Trek: …           200 Success         
-#>  3 https://www.r… https://github.co… regex                  200 Success         
-#>  4 https://www.r… https://en.wikipe… Wikipedia              200 Success         
-#>  5 https://www.r… https://cran.r-pr… how-to vign…           404 Client error    
-#>  6 https://www.r… https://www.htmlw… htmlwidget             200 Success         
-#>  7 https://www.r… https://github.co… ggsci                  200 Success         
-#>  8 https://www.r… https://rostrum.b… Adriana                200 Success         
-#>  9 https://www.r… https://xkcd.com/… relevant xk…           200 Success         
-#> 10 https://www.r… https://github.co… RTrek                  200 Success         
-#> 11 https://www.r… https://en.wikipe… Wikipedia              200 Success         
-#> 12 https://www.r… https://creativec… CC BY-NC-SA…           200 Success         
-#> 13 https://www.r… https://www.rostr… Feed                   200 Success         
-#> 14 https://www.r… https://github.co… Source                 200 Success         
-#> 
-#> $`two-dogs-in-toilet-elderly-lady-involved`
-#> # A tibble: 30 x 5
-#>    page            link_url          link_text    response_code response_catego…
-#>    <chr>           <chr>             <chr>                <int> <chr>           
-#>  1 https://www.ro… https://www.twit… @mattdray              200 Success         
-#>  2 https://www.ro… https://data.lon… the London …           200 Success         
-#>  3 https://www.ro… https://github.c… the sf pack…           200 Success         
-#>  4 https://www.ro… https://rstudio.… interactive…           200 Success         
-#>  5 https://www.ro… https://en.wikip… eastings an…           200 Success         
-#>  6 https://www.ro… https://en.wikip… latitude               200 Success         
-#>  7 https://www.ro… https://en.wikip… longitude              200 Success         
-#>  8 https://www.ro… https://rstudio.… leaflet                200 Success         
-#>  9 https://www.ro… https://www.r-pr… R                      200 Success         
-#> 10 https://www.ro… https://github.c… sf (‘simple…           200 Success         
+#> # A tibble: 30 x 6
+#>    page    link_url    link_text response_code response_catego… response_success
+#>    <chr>   <chr>       <chr>             <dbl> <chr>            <lgl>           
+#>  1 https:… https://ww… R statis…           200 Success          TRUE            
+#>  2 https:… https://en… Star Tre…           200 Success          TRUE            
+#>  3 https:… http://www… Star Tre…           200 Success          TRUE            
+#>  4 https:… https://gi… regex               200 Success          TRUE            
+#>  5 https:… http://vit… tidy                200 Success          TRUE            
+#>  6 https:… https://en… Wikipedia           200 Success          TRUE            
+#>  7 https:… http://sel… Selector…           200 Success          TRUE            
+#>  8 https:… https://cr… how-to v…           404 Client error     FALSE           
+#>  9 https:… https://ww… htmlwidg…           200 Success          TRUE            
+#> 10 https:… https://gi… ggsci               200 Success          TRUE            
 #> # … with 20 more rows
 #> 
+#> $`two-dogs-in-toilet-elderly-lady-involved`
+#> # A tibble: 40 x 6
+#>    page     link_url   link_text response_code response_catego… response_success
+#>    <chr>    <chr>      <chr>             <dbl> <chr>            <lgl>           
+#>  1 https:/… https://w… @mattdray           200 Success          TRUE            
+#>  2 https:/… https://d… the Lond…           200 Success          TRUE            
+#>  3 https:/… https://g… the sf p…           200 Success          TRUE            
+#>  4 https:/… https://r… interact…           200 Success          TRUE            
+#>  5 https:/… https://e… eastings…           200 Success          TRUE            
+#>  6 https:/… https://e… latitude            200 Success          TRUE            
+#>  7 https:/… https://e… longitude           200 Success          TRUE            
+#>  8 https:/… https://r… leaflet             200 Success          TRUE            
+#>  9 https:/… https://w… R                   200 Success          TRUE            
+#> 10 https:/… https://g… sf (‘sim…           200 Success          TRUE            
+#> # … with 30 more rows
+#> 
 #> $`pokeballs-in-super-smash-bros`
-#> # A tibble: 20 x 5
-#>    page         link_url         link_text        response_code response_catego…
-#>    <chr>        <chr>            <chr>                    <int> <chr>           
-#>  1 https://www… https://en.wiki… Super Smash Bros           200 Success         
-#>  2 https://www… https://en.wiki… Super Smash Bro…           400 Client error    
-#>  3 https://www… https://en.wiki… SSB Melee, 2001            200 Success         
-#>  4 https://www… https://en.wiki… SSB Brawl, 2008            200 Success         
-#>  5 https://www… https://en.wiki… SSB ‘4’, 2014              200 Success         
-#>  6 https://www… https://www.ssb… a series of org…           200 Success         
-#>  7 https://www… https://en.wiki… the Super Mario…           200 Success         
-#>  8 https://www… https://en.wiki… Zelda                      200 Success         
-#>  9 https://www… https://en.wiki… EarthBound                 200 Success         
-#> 10 https://www… https://en.wiki… the Pokémon ser…           400 Client error    
-#> 11 https://www… https://www.ssb… The SSB wiki               200 Success         
-#> 12 https://www… https://github.… a CSV on GitHub            200 Success         
-#> 13 https://www… https://github.… the Rokemon pac…           200 Success         
-#> 14 https://www… https://www.ssb… the SSB wiki               200 Success         
-#> 15 https://www… https://www.you… the indie docum…           200 Success         
-#> 16 https://www… https://guangch… Guangchuang Yu             200 Success         
-#> 17 https://www… https://cran.r-… plots points as…           404 Client error    
-#> 18 https://www… https://creativ… CC BY-NC-SA 4.0            200 Success         
-#> 19 https://www… https://www.ros… Feed                       200 Success         
-#> 20 https://www… https://github.… Source                     200 Success
+#> # A tibble: 21 x 6
+#>    page    link_url    link_text response_code response_catego… response_success
+#>    <chr>   <chr>       <chr>             <dbl> <chr>            <lgl>           
+#>  1 https:… https://en… Super Sm…           200 Success          TRUE            
+#>  2 https:… https://en… Super Sm…           400 Client error     FALSE           
+#>  3 https:… https://en… SSB Mele…           200 Success          TRUE            
+#>  4 https:… https://en… SSB Braw…           200 Success          TRUE            
+#>  5 https:… https://en… SSB ‘4’,…           200 Success          TRUE            
+#>  6 https:… https://ww… a series…           200 Success          TRUE            
+#>  7 https:… https://en… the Supe…           200 Success          TRUE            
+#>  8 https:… https://en… Zelda               200 Success          TRUE            
+#>  9 https:… https://en… EarthBou…           200 Success          TRUE            
+#> 10 https:… https://en… the Poké…           400 Client error     FALSE           
+#> # … with 11 more rows
 ```
 
 Uh-oh, more broken links.

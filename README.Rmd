@@ -38,12 +38,12 @@ remotes::install_github("matt-dray/linkrot")
 
 Pass a webpage URL to `lr_check()` and get a tibble with each https link on that page and what its [response code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) is (ideally we want `200`). 
 
-Here's a check on one of my older blog posts:
+Here's a check on one of my older blog posts. The printout tells you the URL you're looking at, with a dot for each successful check.
 
 ```{r}
 library(linkrot)
 page <-  "https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/"
-lr_check(page)
+detect_rot(page)
 ```
 
 Uh oh, at least one is broken: it has a `response_code` of `404`.
@@ -58,7 +58,7 @@ pages <- c(
 )
 
 library(purrr)
-set_names(map(pages, lr_check), basename(pages))
+set_names(map(pages, detect_rot), basename(pages))
 ```
 
 Uh-oh, more broken links.
