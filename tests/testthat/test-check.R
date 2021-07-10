@@ -3,7 +3,7 @@ page_404 <- "https://www.rostrum.blog/404"
 
 test_that("output of check is a dataframe", {
 
-  valid_out <- lr_check(page)
+  valid_out <- detect_rot(page)
 
   # Expect a tibble back if URL is valid
   expect_type(valid_out, "list")
@@ -14,18 +14,18 @@ test_that("output of check is a dataframe", {
 test_that("invalid inputs cause errors", {
 
   # Invalid page argument
-  expect_error(lr_check())
-  expect_error(lr_check(1))
-  expect_error(lr_check(c(page, page)))
-  expect_error(lr_check(list(page)))
+  expect_error(detect_rot())
+  expect_error(detect_rot(1))
+  expect_error(detect_rot(c(page, page)))
+  expect_error(detect_rot(list(page)))
 
   # Correct class, but can't resolve
-  expect_error(lr_check("x"))
+  expect_error(detect_rot("x"))
 
 })
 
 test_that("unresolvable page causes error", {
 
-  expect_error(lr_check(page_404))
+  expect_error(detect_rot(page_404))
 
 })

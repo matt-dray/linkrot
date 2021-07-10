@@ -1,22 +1,22 @@
 
-#' Assess a Webpage for Linkrot
+#' Assess a Web Page for Link Rot
 #'
-#' Fetch web links from a given page and check for a response.
+#' Fetch all web links from a given web page and check for a response.
 #'
 #' @param page Character. A valid URL to a webpage that contains links you
-#'     want to check for linkrot. Must start 'http://www.' or 'https://www.'.
+#'     want to check for link rot. Must start 'http://' or 'https://'.
 #'
-#' @return A data.frame with 5 columns (page, link_url, link_text, response_code
-#'     and response_category, success) and as many rows per URLs found on the
-#'     page provided by the user.
+#' @return A tibble with six columns (page, link_url, link_text, response_code,
+#'     response_category and response_success) and as many rows as URLs found
+#'     on the web page provided by the user.
 #'
 #' @export
 #'
-#' @examples \dontrun{ lr_check("https://www.rostrum.blog/") }
-lr_check <- function(page) {
+#' @examples \dontrun{ detect_rot("https://www.rostrum.blog/") }
+detect_rot <- function(page) {
 
   .validate_page(page)
-  cat(paste0("[", Sys.time(), "]"), page)
+  cat(paste0("Checking <", page, "> "))
   links <- .fetch_links(page)
   .check_links(links)
 

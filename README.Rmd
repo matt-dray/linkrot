@@ -21,9 +21,9 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/matt-dray/linkrot/branch/main/graph/badge.svg)](https://codecov.io/gh/matt-dray/linkrot?branch=main)
 <!-- badges: end -->
 
-An R package to help detect [linkrot](https://en.wikipedia.org/wiki/Link_rot), which is when links to a web page break because it's been taken down or moved.
+An R package to help detect [linkrot](https://en.wikipedia.org/wiki/Link_rot), which is when links to a web page break because they've been taken down or moved.
 
-Very much a concept for now. Feel free to contribute.
+Very much a concept. I wrote it to detect linkrot on my personal blog and it works for my needs. Feel free to contribute.
 
 ## Install
 

@@ -5,10 +5,10 @@
   }
 
   # Extremely basic URL validity check
-  is_url_ok <- grepl("^http://www\\.|^https://www\\.", page)
+  is_url_ok <- grepl("^http://|^https://", page)
 
   if (!is_url_ok) {
-    stop("Argument 'page' must begin 'http(s)://www.'.")
+    stop("Argument 'page' must begin 'http(s)://'.")
   }
 
   # Can page be reached?
@@ -36,9 +36,6 @@
     link_url = link_urls,
     link_text = link_texts
   )
-
-  # Only the unique links
-  links_df <- unique(links_df)
 
   # Only want links to webpages
   pattern <- "^http://|^https://"
@@ -81,7 +78,7 @@
   )
 
   # Logical rot status
-  links_df$success <- unlist(
+  links_df$response_success <- unlist(
     lapply(
       links_df$response_category,
       function(x) ifelse(x == "Success", TRUE, FALSE)
@@ -91,7 +88,7 @@
   cat("\n")
 
   # Return as tibble for nicer printing
-  as_tibble(links_df)
+  tibble::as_tibble(links_df)
 
 
 
