@@ -35,19 +35,20 @@ remotes::install_github("matt-dray/linkrot")
 
 ## Example
 
-Pass a webpage URL to `lr_check()` and get a tibble with each https link
-on that page and what its [response
+Pass a webpage URL to `detect_rot()` and get a tibble with each link on
+that page and what its [response status
 code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) is
 (ideally we want `200`).
 
 Here’s a check on one of my older blog posts. The printout tells you the
-URL you’re looking at, with a dot for each successful check.
+URL you’re looking at, with a period printed for each successful check.
 
 ``` r
 library(linkrot)
 page <-  "https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/"
-detect_rot(page)
+rot_page <- detect_rot(page)
 #> Checking <https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/> ..............................
+rot_page
 #> # A tibble: 30 x 6
 #>    page    link_url    link_text response_code response_catego… response_success
 #>    <chr>   <chr>       <chr>             <dbl> <chr>            <lgl>           
@@ -76,10 +77,11 @@ pages <- c(
 )
 
 library(purrr)
-set_names(map(pages, detect_rot), basename(pages))
+rot_pages <- set_names(map(pages, detect_rot), basename(pages))
 #> Checking <https://www.rostrum.blog/2018/04/14/r-trek-exploring-stardates/> ..............................
 #> Checking <https://www.rostrum.blog/2018/04/27/two-dogs-in-toilet-elderly-lady-involved/> ........................................
 #> Checking <https://www.rostrum.blog/2018/05/19/pokeballs-in-super-smash-bros/> .....................
+rot_pages
 #> $`r-trek-exploring-stardates`
 #> # A tibble: 30 x 6
 #>    page    link_url    link_text response_code response_catego… response_success
